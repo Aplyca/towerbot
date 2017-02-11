@@ -1,0 +1,17 @@
+log: false
+
+chat:
+  error:
+    pretext: "I could not do what you asked."
+    title: "I'm sorry, something went wrong"
+  success:
+    title: "Title"
+    fields: []
+
+tower:
+  name: My Tower
+  hostname: tower.example.com
+  users:
+    test: "mypassword"
+
+commands: {}

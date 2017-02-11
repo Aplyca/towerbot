@@ -1,0 +1,8 @@
+# Ignoring
+node_modules/
+.DS_Store
+Thumbs.db
+.idea/
+/npm-debug.log
+_arts
+*.zip

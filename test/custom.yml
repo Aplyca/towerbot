@@ -1,0 +1,13 @@
+log: true
+
+chat:
+  error:
+    pretext: "Pretext"
+    title: "Title"
+
+commands:
+  test:
+    this1:
+      command: my command 0
+    this2:
+      command: my second command

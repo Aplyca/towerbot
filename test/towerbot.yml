@@ -1,0 +1,25 @@
+log: true
+
+chat:
+  error:
+    pretext: "I could not do what you asked."
+    title: "I'm sorry :pensive:, something is wrong with me"
+  success:
+    title: ""
+    fields: []
+
+tower:
+  name: My Tower
+  hostname: tower.example.com
+  users:
+    test: "mypassword"
+
+commands:
+  test:
+    this:
+      command: my command test
+    this2:
+      command: my second command test
+  test2:
+    this:
+      command: my command test
