@@ -18,7 +18,10 @@ tower:
 
 commands:
   task:
+    # The deploy template job ID in Tower is 42
     deploy: 42
+    # The rollback template job ID in Tower is 24
+    rollback: 24
 ```
 
 ```coffescript
