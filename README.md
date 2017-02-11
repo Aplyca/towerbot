@@ -47,6 +47,7 @@ TODOs
 * Improve docs
 * Add support for users of Ansible Tower
 * Add Mocha or Jasmine testing libraries
+* Add Travis and CircleCI CI setup
 
 
 License
