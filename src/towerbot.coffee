@@ -28,8 +28,9 @@ class Towerbot
 
     throw ({"message": "Expresion #{regex} not matched in string #{string}"})
 
-  getCommand: (text = "", ignores = 1, matches = undefined) ->
-    parts = text.toLowerCase().split /\s+/, matches
+  getCommand: (ignores = 1, matches = undefined) ->
+    this.log(this.msg.match)
+    parts = this.msg.match[1].toLowerCase().split /\s+/, matches
     tasks = this.config.commands
     keywords = []
     ignores_counter = 0
@@ -88,7 +89,7 @@ class Towerbot
     }
 
     this.log(message)
-    this.chat.send(message)
+    this.msg.send(message)
 
   sendTowerErrorToSlack: (jobTemplate, error) ->
     this.sendErrorToSlack(error, false, "https://"+this.config.tower.hostname+"/#/job_templates/"+jobTemplate)
@@ -104,7 +105,7 @@ class Towerbot
       }]
     }
     this.log(message)
-    this.chat.send(message)
+    this.msg.send(message)
 
   log: (text) ->
     console.log(text) if this.config.log

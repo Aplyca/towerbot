@@ -30,9 +30,9 @@ towerbot = new TowerBot(['config/towerbot.yml', 'config/custom.yml']);
 
 module.exports = (robot) ->
   robot.respond /.*\s(task\s+.*)/i, (msg) ->
-    towerbot.chat = msg
+    towerbot.msg = msg
     try
-      data = towerbot.getCommand(msg.match[1])
+      data = towerbot.getCommand()
       task = if data.keywords[1] then data.keywords[1] else throw ({"message": "Task not provided or valid"})
 
       towerbot.launchTowerJob(
@@ -51,6 +51,7 @@ TODOs
 * Add support for users of Ansible Tower
 * Add Mocha or Jasmine testing libraries
 * Add Travis and CircleCI CI setup
+* Add suppor for multiple commands in a sentence
 
 
 License
