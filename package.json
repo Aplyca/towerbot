@@ -1,6 +1,6 @@
 {
   "name": "towerbot",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Execute Ansible Tower tasks and send message to Slack",
   "main": "index.coffee",
   "scripts": {
