@@ -107,6 +107,36 @@ class Towerbot
     this.log(message)
     this.msg.send(message)
 
+  respond: (robot) ->
+    request = this.request.body
+    data = if request.payload? then JSON.parse request.payload else request
+    channel = data.channel
+    this.log(data)
+    fields = [
+      {
+        "title": "Title",
+        "value": "http://www.google.com",
+        "short": true
+      },
+      {
+        "title": "Status",
+        "value": "test #{channel}",
+        "short": true
+      }
+    ]
+    message = {
+      attachments: [{
+        "pretext": "Pretext"
+        "title": "Title",
+        "text": "text",
+        "title_link": "http://www.google.com",
+        "color": "good",
+        "fields": fields
+      }]
+    }
+
+    robot.messageRoom channel, message
+
   log: (text) ->
     console.log(text) if this.config.log
 

@@ -1,1 +1,1 @@
-module.exports = require('./src/towerbot');
+module.exports = require('./src/towerbot')
