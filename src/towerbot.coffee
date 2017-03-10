@@ -47,13 +47,18 @@ class Towerbot
 
     return { "result": tasks, "keywords": keywords }
 
-  launchTowerJob: (jobTemplate, extraVars, pretext) ->
+  launchTowerJob: (jobTemplate, vars = false, pretext) ->
     @pretext = pretext
+    message = this.msg.message
     try
-      command = "tower-cli job launch --job-template="+jobTemplate+" --extra-vars='"+extraVars+"'"
+      extraVars = "chat_room=#{message.user.room} chat_user=@#{message.user.name} slack_channel=@#{message.user.name}"
+      if vars
+        extraVars = "#{extraVars} #{vars}"
+      command = "tower-cli job launch --job-template=#{jobTemplate} --extra-vars='#{extraVars}'"
+      this.log(command)
       result = this.child_process.execSync command, { "env": { "TOWER_FORMAT": "json"}, "encoding": "utf-8" }
     catch error
-      this.sendTowerErrorToSlack(jobTemplate, {"title": this.config.tower.name+" job", "message": error.message})
+      this.sendTowerErrorToSlack(jobTemplate, {"title": "#{this.config.tower.name} job", "message": error.message})
       return
 
     this.log(result)
@@ -79,6 +84,7 @@ class Towerbot
     defaults = this.config.chat.success
     message = {
       attachments: [{
+        "fallback": if pretext then pretext else this.config.chat.error.pretext,
         "pretext": if pretext then pretext else defaults.pretext,
         "title": if title then title else defaults.title,
         "text": if text then text else defaults.text,
@@ -97,6 +103,7 @@ class Towerbot
   sendErrorToSlack: (error = {}, pretext = false, title_link = false) ->
     message = {
       attachments: [{
+        "fallback": if pretext then pretext else this.config.chat.error.pretext,
         "pretext": if pretext then pretext else this.config.chat.error.pretext,
         "title": if error.title then error.title else this.config.chat.error.title,
         "text": error.message,
@@ -111,6 +118,7 @@ class Towerbot
     request = this.request.body
     data = if request.payload? then JSON.parse request.payload else request
     channel = data.channel
+    user = data.user
     this.log(data)
     fields = [
       {
@@ -126,7 +134,7 @@ class Towerbot
     ]
     message = {
       attachments: [{
-        "pretext": "Pretext"
+        "pretext": "Pretext @#{user}"
         "title": "Title",
         "text": "text",
         "title_link": "http://www.google.com",
