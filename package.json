@@ -1,6 +1,6 @@
 {
   "name": "towerbot",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Execute Ansible Tower tasks and send message to Slack",
   "main": "index.coffee",
   "scripts": {
@@ -22,9 +22,9 @@
     "coffee-script": "^1.10.0"
   },
   "repository": {
-		"type": "git",
-		"url": "https://github.com/Aplyca/towerbot"
-	},
+    "type": "git",
+    "url": "https://github.com/Aplyca/towerbot"
+  },
   "author": "Mauricio Sanchez <msanchez@aplyca.com> (http://www.aplyca.com)",
   "license": "MIT"
 }

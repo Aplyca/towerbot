@@ -47,9 +47,11 @@ class Towerbot
 
     return { "result": tasks, "keywords": keywords }
 
-  launchTowerJob: (jobTemplate, vars = false, pretext) ->
+  launchTowerJob: (jobTemplate, vars = false, pretext = "", fields = {}) ->
     @pretext = pretext
+    @additionalFields = fields
     message = this.msg.message
+    
     try
       extraVars = "chat_room=#{message.user.room} chat_user=@#{message.user.name} slack_channel=@#{message.user.name}"
       if vars
@@ -77,6 +79,9 @@ class Towerbot
         "short": true
       }
     ]
+
+    for title, value of @additionalFields
+      fields.push {"title": title, "value": value, "short": true}
 
     this.sendSuccessToSlack(this.pretext, result.name, result.description, "https://"+this.config.tower.hostname+"/#/job_templates/"+result.job_template, fields)
 
