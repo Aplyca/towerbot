@@ -51,9 +51,9 @@ class Towerbot
     @pretext = pretext
     @additionalFields = fields
     message = this.msg.message
-    
+
     try
-      extraVars = "chat_room=#{message.user.room} chat_user=@#{message.user.name} slack_channel=@#{message.user.name}"
+      extraVars = "chat_room=#{message.user.room} chat_user=@#{message.user.name} slack_channel=@#{message.user.name} chat_profile=#{message.user.profile.real_name} <#{message.user.profile.email}>"
       if vars
         extraVars = "#{extraVars} #{vars}"
       command = "tower-cli job launch --job-template=#{jobTemplate} --extra-vars='#{extraVars}'"
@@ -122,32 +122,8 @@ class Towerbot
   respond: (robot) ->
     request = this.request.body
     data = if request.payload? then JSON.parse request.payload else request
-    channel = data.channel
-    user = data.user
-    this.log(data)
-    fields = [
-      {
-        "title": "Title",
-        "value": "http://www.google.com",
-        "short": true
-      },
-      {
-        "title": "Status",
-        "value": "test #{channel}",
-        "short": true
-      }
-    ]
-    message = {
-      attachments: [{
-        "pretext": "Pretext @#{user}"
-        "title": "Title",
-        "text": "text",
-        "title_link": "http://www.google.com",
-        "color": "good",
-        "fields": fields
-      }]
-    }
-
+    channel = if typeof data.channel is 'string' then data.channel else throw ({"message": "Channel not found"})
+    message = if typeof data.message is 'object' then data.message else throw ({"message": "Message not valid"})
     robot.messageRoom channel, message
 
   log: (text) ->
