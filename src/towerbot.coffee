@@ -22,7 +22,7 @@ class Towerbot
     throw ({"message": "Expressions object is not valid"}) if typeof regexObject isnt 'object'
 
     for expression, value of regexObject
-      regex = new RegExp("^"+expression+"$")
+      regex = new RegExp("^"+expression+"$", 'i')
       if regex.test(string)
         return value
 
@@ -30,7 +30,7 @@ class Towerbot
 
   getCommand: (ignores = 1, matches = undefined) ->
     this.log(this.msg.match)
-    parts = this.msg.match[1].toLowerCase().split /\s+/, matches
+    parts = this.msg.match[1].split /\s+/, matches
     tasks = this.config.commands
     keywords = []
     ignores_counter = 0
