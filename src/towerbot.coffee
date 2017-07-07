@@ -53,7 +53,7 @@ class Towerbot
     message = this.msg.message
 
     try
-      extraVars = "chat_room=#{message.user.room} chat_user=@#{message.user.name} slack_channel=@#{message.user.name} chat_profile=#{message.user.profile.real_name} <#{message.user.profile.email}>"
+      extraVars = "chat_room=#{message.user.room} chat_user=@#{message.user.name} slack_channel=@#{message.user.name}"
       if vars
         extraVars = "#{extraVars} #{vars}"
       command = "tower-cli job launch --job-template=#{jobTemplate} --extra-vars='#{extraVars}'"
