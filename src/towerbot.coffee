@@ -38,7 +38,7 @@ class Towerbot
     for part in parts
       try
         tasks = this.expressionsMatch(tasks, part)
-        keywords.push(part)
+        keywords.push(part.toString())
         ignores_counter = 0
       catch error
         if ignores_counter >= ignores
@@ -47,16 +47,20 @@ class Towerbot
 
     return { "result": tasks, "keywords": keywords }
 
-  launchTowerJob: (jobTemplate, vars = false, pretext = "", fields = {}) ->
+  launchTowerJob: (jobTemplate, vars = {}, pretext = "", fields = {}) ->
     @pretext = pretext
     @additionalFields = fields
     message = this.msg.message
 
     try
-      extraVars = "chat_room=#{message.user.room} chat_user=@#{message.user.name} slack_channel=@#{message.user.name}"
-      if vars
-        extraVars = "#{extraVars} #{vars}"
-      command = "tower-cli job launch --job-template=#{jobTemplate} --extra-vars='#{extraVars}'"
+      extraVars = {
+        "chat_room": "#{message.user.room}",
+        "chat_user": "@#{message.user.name}",
+        "slack_channel": "@#{message.user.name}"
+      }
+      Object.assign(extraVars, vars)
+
+      command = "tower-cli job launch --job-template=#{jobTemplate} --extra-vars='#{JSON.stringify(extraVars)}'"
       this.log(command)
       result = this.child_process.execSync command, { "env": { "TOWER_FORMAT": "json"}, "encoding": "utf-8" }
     catch error
