@@ -76,11 +76,6 @@ class Towerbot
         "title": this.config.tower.name+" job",
         "value": "<https://"+this.config.tower.hostname+"/#/jobs/"+result.id+"|"+result.id+">",
         "short": true
-      },
-      {
-        "title": "Status",
-        "value": result.status,
-        "short": true
       }
     ]
 
